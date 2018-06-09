@@ -11,7 +11,7 @@ def start(points_count=100, max_width=50.0, clusters_count=5):
                           for i in range(points_count)])
 
     while len(clusters) > clusters_count:
-        average_join(clusters, distances)
+        clusters = average_join(clusters, distances)
         draw_clusters(clusters, points)
 
     return
@@ -60,6 +60,7 @@ def get_cluster_distance(cluster_1, cluster_2, distances):
 
 def average_join(clusters, distances):
     used = []
+    new_clusters = []
     for index in range(len(clusters)):
         if not used.__contains__(index):
             lowest_distance = 0.0
@@ -76,6 +77,6 @@ def average_join(clusters, distances):
                             nearest_cluster = j
 
             used += [index, nearest_cluster]
-            clusters[index].append(nearest_cluster)
-            clusters.pop(nearest_cluster)
-    return
+            new_clusters.append(clusters[index] + clusters[nearest_cluster])
+
+    return new_clusters
