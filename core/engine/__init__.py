@@ -1,1 +1,1 @@
-__all__ = ['aggregation']
+__all__ = ['aggregation', 'agglomeration']

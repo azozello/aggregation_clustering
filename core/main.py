@@ -1,4 +1,3 @@
-import core.engine.aggregation as a
+import core.engine.agglomeration as a
 
-
-a.start()
+a.start(10, 5, 2)
