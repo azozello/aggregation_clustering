@@ -31,6 +31,10 @@ def average_distance_join(points_distances, clusters_numbers):
                                    for j in range(len(clusters_numbers))] for i in range(len(clusters_numbers))])
     closest_clusters = get_closest_clusters(cluster_distances)
     used = []
+    available = 0
+    for i in range(len(clusters_numbers)):
+        for j in range(len(clusters_numbers[i])):
+            available += 1
 
     for i in range(len(closest_clusters)):
         can_add = True
@@ -38,24 +42,27 @@ def average_distance_join(points_distances, clusters_numbers):
             if used.__contains__(point):
                 can_add = False
                 break
-            print(point)
         for point in clusters_numbers[int(closest_clusters[i][2])]:
             if used.__contains__(point):
                 can_add = False
                 break
-            print(point)
+
         if can_add:
             new_clusters_numbers.append(clusters_numbers[int(closest_clusters[i][1])] +
                                         clusters_numbers[int(closest_clusters[i][2])])
             for number in clusters_numbers[int(closest_clusters[i][1])] + clusters_numbers[int(closest_clusters[i][2])]:
                 if number not in used:
                     used.append(number)
-        if len(used) >= len(clusters_numbers):
+
+        if len(clusters_numbers) - (len(new_clusters_numbers) * 2) == 1:
+            for l in range(len(clusters_numbers)):
+                for j in range(len(clusters_numbers[l])):
+                    if clusters_numbers[l][j] not in used:
+                        new_clusters_numbers.append([clusters_numbers[l][j]])
+                        used.append(clusters_numbers[l][j])
+
+        if len(used) == available:
             break
-        # TODO:// Add cluster separating when odd number of clusters
-        if len(clusters_numbers) - (len(new_clusters_numbers) * 2) < 2:
-            print()
-            # new_clusters_numbers.append()
 
     return new_clusters_numbers
 
